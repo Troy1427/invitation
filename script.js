@@ -18,6 +18,29 @@ let musicPlaying = false;
 let isLoaded = false;
 
 // ========================================
+// 0. HIDE LOADING & SHOW CONTENT (IMPROVED)
+// ========================================
+
+function hideLoading() {
+    const loadingOverlay = document.getElementById('loading');
+    if (loadingOverlay) {
+        loadingOverlay.classList.add('fade-out');
+        setTimeout(() => {
+            loadingOverlay.style.display = 'none';
+            isLoaded = true;
+        }, 500);
+    }
+}
+
+// Hide loading setelah 1.5 detik atau saat halaman fully loaded
+window.addEventListener('load', function() {
+    setTimeout(hideLoading, 1500);
+});
+
+// Fallback: hide loading jika masih berjalan setelah 4 detik
+setTimeout(hideLoading, 4000);
+
+// ========================================
 // 1. GUEST NAME FROM URL (?to=)
 // ========================================
 
@@ -35,21 +58,7 @@ function getGuestName() {
 }
 
 // ========================================
-// 2. LOADING ANIMATION
-// ========================================
-
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        document.getElementById('loading').classList.add('fade-out');
-        setTimeout(function() {
-            document.getElementById('loading').style.display = 'none';
-            isLoaded = true;
-        }, 1000);
-    }, 2000);
-});
-
-// ========================================
-// 3. BUKA UNDANGAN
+// 2. BUKA UNDANGAN
 // ========================================
 
 function bukaUndangan() {
@@ -67,7 +76,7 @@ function bukaUndangan() {
 }
 
 // ========================================
-// 4. TOGGLE MUSIC
+// 3. TOGGLE MUSIC
 // ========================================
 
 function toggleMusic() {
@@ -88,7 +97,7 @@ function toggleMusic() {
 }
 
 // ========================================
-// 5. SCROLL ANIMATIONS (Fade Up/Left/Right/Zoom)
+// 4. SCROLL ANIMATIONS (Fade Up/Left/Right/Zoom)
 // ========================================
 
 function initScrollAnimations() {
@@ -112,7 +121,7 @@ function initScrollAnimations() {
 }
 
 // ========================================
-// 6. PARALLAX BACKGROUND
+// 5. PARALLAX BACKGROUND
 // ========================================
 
 window.addEventListener('scroll', function() {
@@ -126,7 +135,7 @@ window.addEventListener('scroll', function() {
 });
 
 // ========================================
-// 7. COUNTDOWN TIMER
+// 6. COUNTDOWN TIMER
 // ========================================
 
 function startCountdown() {
@@ -158,7 +167,7 @@ function startCountdown() {
 }
 
 // ========================================
-// 8. PHOTO SLIDER
+// 7. PHOTO SLIDER
 // ========================================
 
 function changeSlide(direction) {
@@ -180,7 +189,7 @@ setInterval(function() {
 }, 5000);
 
 // ========================================
-// 9. RSVP - GOOGLE SPREADSHEET
+// 8. RSVP - GOOGLE SPREADSHEET
 // ========================================
 
 function kirimRSVP(event) {
@@ -227,7 +236,7 @@ function kirimRSVP(event) {
 }
 
 // ========================================
-// 10. UCAPAN TAMU (Local Storage)
+// 9. UCAPAN TAMU (Local Storage)
 // ========================================
 
 function kirimUcapan(event) {
@@ -246,7 +255,7 @@ function kirimUcapan(event) {
         
         const item = document.createElement('div');
         item.className = 'ucapan-item';
-        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + nama + '</span><span class="ucapan-text">' + ucapan + '</span><span class="ucapan-time">' + newUcapan.waktu + '</span></div>';
+        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + nama + '</span><span class="ucapan-text">' + ucapan + '</span><span class="ucapan-waktu">' + newUcapan.waktu + '</span></div>';
         
         list.insertBefore(item, list.firstChild);
         document.getElementById('wishForm').reset();
@@ -262,7 +271,7 @@ function loadSavedWishes() {
     ucapanList.forEach(function(ucapan) {
         const item = document.createElement('div');
         item.className = 'ucapan-item';
-        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + ucapan.nama + '</span><span class="ucapan-text">' + ucapan.ucapan + '</span><span class="ucapan-time">' + ucapan.waktu + '</span></div>';
+        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + ucapan.nama + '</span><span class="ucapan-text">' + ucapan.ucapan + '</span><span class="ucapan-waktu">' + ucapan.waktu + '</span></div>';
         list.appendChild(item);
     });
 }
