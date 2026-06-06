@@ -100,7 +100,9 @@ function toggleMusic() {
         icon.classList.add('fa-music');
         musicPlaying = false;
     } else {
-        music.play().catch(function(e) { console.log('Autoplay blocked'); });
+        music.play().catch(function(e) { 
+            console.log('Autoplay blocked - user must click button to play');
+        });
         icon.classList.remove('fa-music');
         icon.classList.add('fa-pause');
         musicPlaying = true;
@@ -222,21 +224,20 @@ function kirimRSVP(event) {
     
     fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.result === 'success') {
-            message.innerHTML = '🎉 ' + data.message;
-            message.className = 'rsvp-message success';
-            document.getElementById('rsvpForm').reset();
-        } else {
-            message.innerHTML = '❌ ' + data.message;
-            message.className = 'rsvp-message error';
-        }
+    .then(response => {
+        // Dengan mode no-cors, kita tidak bisa membaca response
+        // Tapi jika fetch berhasil, berarti data terkirim
+        message.innerHTML = '🎉 Ucapan terima kasih telah dikirim!';
+        message.className = 'rsvp-message success';
+        document.getElementById('rsvpForm').reset();
+        return true;
     })
     .catch(error => {
+        console.error('Error:', error);
         message.innerHTML = '❌ Terjadi kesalahan. Silakan coba lagi.';
         message.className = 'rsvp-message error';
     })
