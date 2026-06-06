@@ -183,7 +183,7 @@ setInterval(function() {
 // 9. RSVP - GOOGLE SPREADSHEET
 // ========================================
 
-function KirimRSVP(event) {
+function kirimRSVP(event) {
     event.preventDefault();
     
     const btn = document.querySelector('.btn-rsvp-submit');
@@ -230,7 +230,7 @@ function KirimRSVP(event) {
 // 10. UCAPAN TAMU (Local Storage)
 // ========================================
 
-function KirimUcapan(event) {
+function kirimUcapan(event) {
     event.preventDefault();
     
     const nama = document.getElementById('namaTamu').value;
@@ -246,12 +246,25 @@ function KirimUcapan(event) {
         
         const item = document.createElement('div');
         item.className = 'ucapan-item';
-        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + nama + '</span><span class="ucapan-text">' + ucapan + '</span><span class="ucapan-waktu">' + newUcapan.waktu + '</span></div>';
+        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + nama + '</span><span class="ucapan-text">' + ucapan + '</span><span class="ucapan-time">' + newUcapan.waktu + '</span></div>';
         
         list.insertBefore(item, list.firstChild);
         document.getElementById('wishForm').reset();
         alert('Terima kasih atas ucapan Anda! 🙏');
     }
+}
+
+// Load saved wishes on page load
+function loadSavedWishes() {
+    const list = document.getElementById('ucapanList');
+    const ucapanList = JSON.parse(localStorage.getItem('ucapanList') || '[]');
+    
+    ucapanList.forEach(function(ucapan) {
+        const item = document.createElement('div');
+        item.className = 'ucapan-item';
+        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + ucapan.nama + '</span><span class="ucapan-text">' + ucapan.ucapan + '</span><span class="ucapan-time">' + ucapan.waktu + '</span></div>';
+        list.appendChild(item);
+    });
 }
 
 // ========================================
@@ -260,5 +273,6 @@ function KirimUcapan(event) {
 
 document.addEventListener('DOMContentLoaded', function() {
     getGuestName();
+    loadSavedWishes();
     console.log('Wedding Invitation Ready!');
 });
