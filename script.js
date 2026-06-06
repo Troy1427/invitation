@@ -69,12 +69,14 @@ function getGuestName() {
 }
 
 // ========================================
-// 2. BUKA UNDANGAN
+// 2. BUKA UNDANGAN + AUTO PLAY MUSIC
 // ========================================
 
 function bukaUndangan() {
     const overlay = document.getElementById('openingOverlay');
     const mainContent = document.getElementById('mainContent');
+    const music = document.getElementById('bgMusic');
+    const icon = document.getElementById('musicIcon');
     
     overlay.classList.add('closing');
     
@@ -83,6 +85,16 @@ function bukaUndangan() {
         mainContent.style.display = 'block';
         initScrollAnimations();
         startCountdown();
+        
+        // AUTO PLAY MUSIC ketika undangan dibuka
+        music.play().catch(function(e) { 
+            console.log('Autoplay blocked - user must click button to play');
+        });
+        
+        // Update icon musik menjadi pause (menunjukkan musik sedang dimainkan)
+        icon.classList.remove('fa-music');
+        icon.classList.add('fa-pause');
+        musicPlaying = true;
     }, 800);
 }
 
@@ -231,7 +243,7 @@ function kirimRSVP(event) {
     .then(response => {
         // Dengan mode no-cors, kita tidak bisa membaca response
         // Tapi jika fetch berhasil, berarti data terkirim
-        message.innerHTML = '🎉 Ucapan terima kasih telah dikirim!';
+        message.innerHTML = '🎉 Terima kasih! Konfirmasi Anda telah diterima.';
         message.className = 'rsvp-message success';
         document.getElementById('rsvpForm').reset();
         return true;
