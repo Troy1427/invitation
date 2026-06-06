@@ -23,22 +23,33 @@ let isLoaded = false;
 
 function hideLoading() {
     const loadingOverlay = document.getElementById('loading');
-    if (loadingOverlay) {
+    const openingOverlay = document.getElementById('openingOverlay');
+    
+    if (loadingOverlay && !isLoaded) {
         loadingOverlay.classList.add('fade-out');
         setTimeout(() => {
             loadingOverlay.style.display = 'none';
             isLoaded = true;
+            // Pastikan opening overlay terlihat
+            if (openingOverlay) {
+                openingOverlay.style.display = 'block';
+            }
         }, 500);
     }
 }
 
-// Hide loading setelah 1.5 detik atau saat halaman fully loaded
-window.addEventListener('load', function() {
-    setTimeout(hideLoading, 1500);
+// Hide loading saat DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(hideLoading, 800);
 });
 
-// Fallback: hide loading jika masih berjalan setelah 4 detik
-setTimeout(hideLoading, 4000);
+// Hide loading saat window fully loaded
+window.addEventListener('load', function() {
+    setTimeout(hideLoading, 1000);
+});
+
+// Fallback absolute: hide loading setelah 2.5 detik
+setTimeout(hideLoading, 2500);
 
 // ========================================
 // 1. GUEST NAME FROM URL (?to=)
@@ -255,7 +266,7 @@ function kirimUcapan(event) {
         
         const item = document.createElement('div');
         item.className = 'ucapan-item';
-        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + nama + '</span><span class="ucapan-text">' + ucapan + '</span><span class="ucapan-waktu">' + newUcapan.waktu + '</span></div>';
+        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + nama + '</span><span class="ucapan-text">' + ucapan + '</span><span class="ucapan-time">' + newUcapan.waktu + '</span></div>';
         
         list.insertBefore(item, list.firstChild);
         document.getElementById('wishForm').reset();
@@ -271,7 +282,7 @@ function loadSavedWishes() {
     ucapanList.forEach(function(ucapan) {
         const item = document.createElement('div');
         item.className = 'ucapan-item';
-        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + ucapan.nama + '</span><span class="ucapan-text">' + ucapan.ucapan + '</span><span class="ucapan-waktu">' + ucapan.waktu + '</span></div>';
+        item.innerHTML = '<div class="ucapan-avatar"><i class="fas fa-user"></i></div><div class="ucapan-content"><span class="ucapan-nama">' + ucapan.nama + '</span><span class="ucapan-text">' + ucapan.ucapan + '</span><span class="ucapan-time">' + ucapan.waktu + '</span></div>';
         list.appendChild(item);
     });
 }
