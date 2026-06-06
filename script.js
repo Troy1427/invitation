@@ -8,10 +8,10 @@
 // ========================================
 
 // ✅ GANTI: Google Apps Script URL (dari Cara 2 RSVP)
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/ABCDEFGHIJK/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxAinCnN9xx1swy5_Aqzn27mHnI4QRRBDCc3gKshKK_WMbHfFLnIQQR_RuWtTxgLXBi/exec';
 
 // ✅ GANTI: Tanggal Pernikahan (format: YYYY-MM-DDTHH:MM:SS)
-const TANGGAL_NIKAH = new Date('2025-06-15T08:00:00');
+const TANGGAL_NIKAH = new Date('2027-03-12T08:00:00');
 
 let currentSlide = 0;
 let musicPlaying = false;
